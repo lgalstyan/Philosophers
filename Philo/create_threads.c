@@ -12,13 +12,13 @@
 
 #include "philo.h"
 
-static void	*skittles(void *p)
+static void	*skittles(void *param)
 {
 	t_philo	*ph;
 
-	ph = (t_philo *)p;
+	ph = (t_philo *)param;
 	if (ph->index % 2)
-		ft_usleep(ph->t_eat - 10);
+		ft_usleep(ph->t_eat);
 	while (1)
 	{
 		pthread_mutex_lock(&ph->left);
@@ -63,16 +63,15 @@ int	dielock(t_philo *arr)
 {
 	  int	i;
 
-	  i = 0;
-	  while (i < arr[0].num_philo)
+	  i = -1;
+	  while (++i < arr[0].num_philo)
 	  {
 		  if (now() - arr[i].timer > (unsigned long long)arr[i].t_die)
 		  {
 		  	usleep(10);
-			printf("%llu\t%d  is died\n", now() - arr[i].start_time, arr[i].index + 1);
+			printf("\x1b[31m%llu\t%d is died\n", now() - arr[i].start_time, arr[i].index + 1);
 		  	return (0);
 		  }
-		  ++i;
 	  }
 	  return (1);
 }
@@ -81,12 +80,11 @@ int	finish_eating(t_philo *arr)
 {
 	int	i;
 
-	i = 0;
-	while (i < arr[0].num_philo)
+	i = -1;
+	while (++i < arr[0].num_philo)
 	{
 		if(arr[i].eat_counter < arr[i].num_of_eat)
 			return (0);
-		++i;
 	}
 	return (1);
 }

@@ -12,13 +12,19 @@
 
 #include "philo.h"
 
-unsigned long long now()
+unsigned long long now(void)
 {
 	struct timeval		time;
-	unsigned long long	res;
+
 	gettimeofday(&time, NULL);
-	res = time.tv_sec * 1000 + time.tv_usec / 1000;
-	return (res);
+	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
+}
+
+void	for_print(char *str, t_philo *p, char *color)
+{
+	pthread_mutex_lock(p->write);
+	printf("%s%llu\t%d  %s", color, now() - p->start_time,p->index + 1, str);
+	pthread_mutex_unlock(p->write);
 }
 
 void	ft_usleep(unsigned long long milisec)
@@ -56,11 +62,4 @@ long	ft_atoi(const char *str)
 		c++;
 	}
 	return (n);
-}
-
-void	for_print(char *str, t_philo *p, char *color)
-{
-	pthread_mutex_lock(&p->print);
-	printf("%s%llu %d %s", color, now() - p->start_time, p->index + 1, str);
-	pthread_mutex_unlock(&p->print);
 }
