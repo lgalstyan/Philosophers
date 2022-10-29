@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgalstya <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lgalstya <lgalstya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 15:52:56 by lgalstya          #+#    #+#             */
-/*   Updated: 2022/10/18 16:39:46 by lgalstya         ###   ########.fr       */
+/*   Updated: 2022/10/29 13:13:42 by lgalstya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-unsigned long long now(void)
+long long	now(void)
 {
 	struct timeval		time;
 
@@ -23,13 +23,13 @@ unsigned long long now(void)
 void	for_print(char *str, t_philo *p, char *color)
 {
 	pthread_mutex_lock(p->write);
-	printf("%s%llu\t%d  %s", color, now() - p->start_time,p->index + 1, str);
+	printf("%s%llu\t%d  %s", color, now() - p->start_time, p->index + 1, str);
 	pthread_mutex_unlock(p->write);
 }
 
-void	ft_usleep(unsigned long long milisec)
+void	ft_usleep(long long milisec)
 {
-	unsigned long long skizb;
+	long long	skizb;
 
 	skizb = now();
 	while (now() - skizb <= milisec)
