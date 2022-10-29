@@ -27,8 +27,6 @@ int	main(int argc, char **argv)
 		return (0);
 	initial(tmp, &phil);
 	create_th(tmp, phil);
-	//destructor(arr->philos, arr->forks);
-	usleep(10000);
 	free(tmp);
 	return (0);
 }

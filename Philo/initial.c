@@ -34,10 +34,11 @@ int	check_correct(t_philo *ph, int argc, char **argv)
 		else
 			return (0);
 	}
+	if (!argv[5])
+		ph->num_of_eat = 0;
 	return (1);
 }
 
-//static void	forking(pthread_mutex_t *forks, t_philo *pil)
 static void	forking(t_philo *pil, pthread_mutex_t *forks, int i)
 {
 	pil->index = i;
@@ -74,19 +75,3 @@ void	initial(t_arrays *arr, t_philo *ph)
 		forking(&arr->philos[i], arr->forks, i);
 	}
 }
-
-// void	destructor(t_philo *arr, pthread_mutex_t *fork)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (i < arr[0].num_philo)
-// 	{
-// 		pthread_mutex_destroy(&fork[i]);
-// 		pthread_mutex_destroy(&arr[i].left);
-// 		pthread_mutex_destroy(&arr[i].right);
-// 		++i;
-// 	}
-// 	free(arr);
-// 	free(fork);
-// }

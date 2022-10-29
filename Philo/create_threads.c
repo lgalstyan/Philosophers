@@ -18,7 +18,7 @@ static void	*skittles(void *param)
 
 	ph = (t_philo *)param;
 	if (ph->index % 2)
-		ft_usleep(ph->t_eat);
+		ft_usleep(ph->t_eat - 1);
 	while (1)
 	{
 		pthread_mutex_lock(ph->left);
@@ -46,7 +46,7 @@ int	create_th(t_arrays *arr, t_philo ph)
 	while (++i < ph.num_philo)
 		if (pthread_create(&arr->philos[i].th, NULL,
 				&skittles, arr->philos + i))
-			return (0);
+			return (1);
 	i = -1;
 	while (++i < ph.num_philo)
 		if (pthread_detach(arr->philos[i].th))
@@ -68,7 +68,6 @@ int	dielock(t_arrays *arr)
 	{
 		if (now() - arr->philos[i].timer > arr->philos[i].t_die)
 		{
-			usleep(10);
 			printf("\x1b[31m%llu\t%d is died\n",
 				now() - arr->philos[i].start_time, arr->philos[i].index + 1);
 			return (0);
@@ -86,7 +85,7 @@ int	finish_eating(t_philo *arr)
 	while (++i < arr[0].num_philo)
 	{
 		if (arr[i].eat_counter < arr[i].num_of_eat)
-			return (0);
+			return (1);
 	}
-	return (1);
+	return (0);
 }
